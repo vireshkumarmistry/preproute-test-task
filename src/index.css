@@ -1,0 +1,142 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #5988EF;
+  --color-brand-blue-hover: #1B5DEF;
+  --color-logo-blue: #1f59da;
+  --color-page-bg: #1c1c1c;
+  --color-card-border: #d9e5f7;
+  --color-left-panel: #000000;
+  --color-text-heading: #374151;
+  --color-text-color: #6B7280;
+}
+
+html,
+body {
+  font-family: "Inter", sans-serif;
+  scrollbar-gutter: stable;
+}
+
+/* react-draft-wysiwyg overrides */
+.rdw-editor-toolbar {
+  border: none !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  margin-bottom: 0 !important;
+  padding: 10px 14px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+}
+
+.rdw-option-wrapper {
+  border: 1px solid transparent !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  padding: 6px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #64748b !important;
+}
+
+.rdw-option-wrapper:hover {
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #1f59da !important;
+  transform: translateY(-1px);
+}
+
+.rdw-option-active {
+  background: #f0f4fe !important;
+  border-color: #dbeafe !important;
+  color: #1f59da !important;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.02) !important;
+}
+
+.rdw-option-active:hover {
+  background: #e0e7ff !important;
+}
+
+.rdw-editor-main {
+  padding: 20px 24px !important;
+  min-height: 140px !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  color: #334155 !important;
+  background: #fafafa !important;
+  cursor: text !important;
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  transition: background 0.2s ease !important;
+}
+
+.rdw-editor-main:focus-within {
+  background: #ffffff !important;
+}
+
+.rdw-dropdown-wrapper {
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  background: #ffffff !important;
+  height: 32px !important;
+  color: #64748b !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  padding: 0 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+.rdw-dropdown-wrapper:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #1f59da !important;
+}
+
+.rdw-dropdown-optionwrapper {
+  border-radius: 8px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  border: 1px solid #e2e8f0 !important;
+  overflow: hidden !important;
+}
+
+/* Ensure images in the editor are a sensible preview size and left-aligned */
+.rdw-editor-main img {
+  max-width: 300px !important;
+  max-height: 200px !important;
+  width: auto !important;
+  height: auto !important;
+  display: block;
+  border-radius: 8px;
+  margin: 4px 0;
+  margin-left: 0 !important;
+  object-fit: contain;
+  border: 1px solid #e2e8f0;
+}
+
+/* Left-align atomic blocks (image wrapper) in the editor */
+.rdw-editor-main .rdw-atomic-block {
+  display: flex !important;
+  justify-content: flex-start !important;
+}
+
+/* TestView – question HTML / explanation HTML images */
+.prose img,
+.question-html img {
+  max-width: 300px !important;
+  max-height: 200px !important;
+  width: auto !important;
+  height: auto !important;
+  display: block;
+  border-radius: 8px;
+  margin: 6px 0;
+  object-fit: contain;
+  border: 1px solid #e2e8f0;
+}

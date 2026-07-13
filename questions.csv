@@ -1,0 +1,3 @@
+Question,Option 1,Option 2,Option 3,Option 4,Correct Option,Explanation,Difficulty,Topic,Subtopic
+"What is the time complexity of searching in a balanced Binary Search Tree (BST)?","O(1)","O(log n)","O(n)","O(n log n)","2","For a balanced BST, search takes logarithmic time because the tree depth is balanced.","Medium","Trees","Binary Search Trees"
+"Which data structure follows the Last-In-First-Out (LIFO) principle?","Queue","Stack","Linked List","Array","2","A stack is a LIFO data structure.","Easy","Basic Data Structures","Stacks"
