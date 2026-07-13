@@ -174,7 +174,9 @@ const TestView = () => {
                 >
                   {testData.status === "active" || testData.status === "live"
                     ? "Live"
-                    : testData.status || "Draft"}
+                    : testData.status === "completed"
+                      ? "Unpublished"
+                      : testData.status || "Draft"}
                 </span>
               </div>
               <h1 className="text-2xl font-black text-slate-800 tracking-tight leading-tight">

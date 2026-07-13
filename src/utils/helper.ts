@@ -55,7 +55,7 @@ export const getStatusStyle = (status: string | null) => {
   const s = status?.toLowerCase();
   if (s === "active" || s === "live")
     return "bg-emerald-50 text-emerald-700 border-emerald-100";
-  if (s === "completed") return "bg-blue-50 text-blue-700 border-blue-100";
+  if (s === "completed" || s === "unpublished") return "bg-blue-50 text-blue-700 border-blue-100";
   return "bg-amber-50 text-amber-700 border-amber-100"; // draft
 };
 

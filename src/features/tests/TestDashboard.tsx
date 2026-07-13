@@ -57,7 +57,11 @@ const TestList = ({
       test.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       test?.subject?.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesStatus = statusFilter === "All" || test.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "All" ||
+      (statusFilter === "Live" && (test.status === "Active" || test.status === "Live")) ||
+      (statusFilter === "Draft" && test.status === "Draft") ||
+      (statusFilter === "Unpublished" && test.status === "Completed");
     const matchesDifficulty = difficultyFilter === "All" || (test.difficulty || "Easy").toLowerCase() === difficultyFilter.toLowerCase();
     const matchesSubject = subjectFilter === "All" || test.subject === subjectFilter;
 
@@ -172,7 +176,7 @@ const TestList = ({
           <Dropdown
             label="Status"
             selectedId={statusFilter}
-            options={["All", "Active", "Draft", "Completed", "Live"].map((opt) => ({
+            options={["All", "Live", "Draft", "Unpublished"].map((opt) => ({
               id: opt,
               name: opt,
             }))}
@@ -251,13 +255,17 @@ const TestList = ({
                       <span
                         className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold border shadow-2xs ${getStatusStyle(test.status)}`}
                       >
-                        {test.status === "Active" && (
+                        {(test.status === "Active" || test.status === "Live") && (
                           <span className="relative flex h-1.5 w-1.5">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
                           </span>
                         )}
-                        {test.status === "Active" ? "Live" : test.status}
+                        {test.status === "Active" || test.status === "Live"
+                          ? "Live"
+                          : test.status === "Completed"
+                            ? "Unpublished"
+                            : test.status}
                       </span>
                     </div>
 
@@ -476,54 +484,55 @@ const TestList = ({
         </>
       )}
       {isDeleteModalOpen && testToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-600/50 backdrop-blur-xs p-4 animate-in fade-in duration-200">
-          <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
-              <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
-                <Trash2 className="h-5 w-5 text-red-500" />
-                Delete Test
-              </h3>
-              <button
-                onClick={() => {
-                  setIsDeleteModalOpen(false);
-                  setTestToDelete(null);
-                }}
-                className="text-gray-400 hover:text-gray-600 cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-[400px] bg-white rounded-3xl shadow-xl border border-slate-100 p-6 flex flex-col items-center text-center animate-in fade-in zoom-in-95 duration-150 relative">
+            
+            {/* Close button */}
+            <button
+              onClick={() => {
+                setIsDeleteModalOpen(false);
+                setTestToDelete(null);
+              }}
+              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
+            >
+              <X className="h-4.5 w-4.5" />
+            </button>
+
+            {/* Glowing Trash Icon Container */}
+            <div className="h-14 w-14 rounded-full bg-red-50 flex items-center justify-center text-red-500 mb-4 ring-8 ring-red-50/40">
+              <Trash2 className="h-6 w-6 stroke-[2]" />
             </div>
-            <div className="p-6 space-y-3">
-              <p className="text-sm text-gray-600">
-                Are you sure you want to delete the test{" "}
-                <span className="font-semibold text-gray-900">
-                  "{testToDelete.name}"
-                </span>
-                ?
+
+            {/* Title & Description */}
+            <h3 className="text-lg font-bold text-slate-800 mb-2">Delete Test?</h3>
+            <p className="text-xs text-slate-500 leading-relaxed px-2">
+              You are about to delete <span className="font-bold text-slate-700">"{testToDelete.name}"</span>. This will permanently remove the test, all its questions, and associated configurations.
+            </p>
+
+            {/* Destructive Warning Box */}
+            <div className="w-full bg-amber-50/60 border border-amber-100 rounded-2xl p-3.5 flex gap-2.5 items-start text-left mt-4 mb-6">
+              <AlertCircle className="h-4.5 w-4.5 text-amber-600 shrink-0 mt-0.5" />
+              <p className="text-[11px] leading-relaxed font-semibold text-amber-800">
+                This action is destructive and cannot be undone. Please confirm you wish to proceed.
               </p>
-              <div className="bg-red-50 border border-red-100 rounded-xl p-3 flex gap-2">
-                <AlertCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
-                <p className="text-xs text-red-700">
-                  This action is permanent and cannot be undone. This will
-                  delete all questions and history associated with this test.
-                </p>
-              </div>
             </div>
-            <div className="bg-gray-50 px-6 py-4 flex justify-end gap-3">
+
+            {/* Action buttons */}
+            <div className="w-full flex items-center gap-3">
               <button
                 onClick={() => {
                   setIsDeleteModalOpen(false);
                   setTestToDelete(null);
                 }}
-                className="px-4 py-2 bg-white border border-[#d9e5f7] hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-lg cursor-pointer transition-colors"
+                className="flex-1 py-3 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl cursor-pointer transition-colors"
               >
-                Cancel
+                No, Keep It
               </button>
               <button
                 onClick={confirmDelete}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg cursor-pointer transition-colors"
+                className="flex-1 py-3 px-4 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl cursor-pointer shadow-sm shadow-red-500/10 hover:shadow-md transition-all duration-150"
               >
-                Delete
+                Yes, Delete
               </button>
             </div>
           </div>
