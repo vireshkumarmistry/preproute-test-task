@@ -61,7 +61,7 @@ const TestList = ({
       statusFilter === "All" ||
       (statusFilter === "Live" && (test.status === "Active" || test.status === "Live")) ||
       (statusFilter === "Draft" && test.status === "Draft") ||
-      (statusFilter === "Unpublished" && test.status === "Completed");
+      (statusFilter === "Unpublished" && (test.status === "Completed" || test.status === "Unpublished"));
     const matchesDifficulty = difficultyFilter === "All" || (test.difficulty || "Easy").toLowerCase() === difficultyFilter.toLowerCase();
     const matchesSubject = subjectFilter === "All" || test.subject === subjectFilter;
 
